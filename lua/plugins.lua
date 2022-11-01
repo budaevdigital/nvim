@@ -31,6 +31,12 @@ if not status_ok then
   return
 end
 
+local status_ok, mason = pcall(require, "mason")
+if not status_ok then 
+  return 
+end
+
+
 -- Показывать сообщения упаковщика во всплывающем окне. Выглядит круче
 packer.init({
   display = {
@@ -48,22 +54,31 @@ local use = packer.use
 =================================
   Место для добавления плагинов
 =================================
-
 ]]
+-- Плагины и удобства в Nvim
 use({ -- Не забыть добавить самого менеджера плагинов packer
   "wbthomason/packer.nvim",
 })
+use({ "williamboman/mason.nvim",
+  config = function()
+    require("config.mason.lua") -- Вызывает файл с дополнительными настройками из директории config
+  end,
+})
+
+-- Всё, касаемо UI
 use({ -- Порт темы Tokyo Night от VSCode
   "folke/tokyonight.nvim",
   config = function()
     vim.g.tokyonight_style = "night" -- Также возможны настройки: storm, night and day
   end,
 })
-use({ -- Установите и настройте языки для Tree-sitter
+
+-- Всё, касаёмо ЯП и написанию кода
+use({ -- Устанавливает и настаивает плагин для ЯП (Tree-sitter)
  "nvim-treesitter/nvim-treesitter",
  run = ":TSUpdate",
  config = function()
-  require("config.treesitter")
+  require("config.treesitter") -- Вызывает файл с дополнительными настройками из директории config
  end,
 })
 

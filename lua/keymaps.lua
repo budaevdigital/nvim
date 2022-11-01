@@ -10,6 +10,7 @@
 
 -- Закинем в переменные нужные аргументы и значение api_nvim, для сокращения
 local map = vim.api.nvim_set_keymap
+local cmd = vim.cmd
 local opts = { noremap = true, silent = true }
 local expr = { noremap = true, silent = true, expr = true }
 
@@ -18,17 +19,20 @@ map("n", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Запоминает место в тексте, куда потом можно "перепругнуть" курсором
+-- Чтобы работали команды даже на русской раскладке
+cmd "set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
+
+-- Выделяет все совпадающие слова (под курсором) в тексте
 map("n", "*", "*<C-o>", opts)
 
--- Показывает поисковые совпадения в середине окна
+-- Показывает поисковые совпадения
 map("n", "n", "nzzzv", opts)
 map("n", "N", "Nzzzv", opts)
 
 -- Переключить NetRW (Lexplore)
 map("n", "<Leader>le", ":Lex 30<Cr>", opts)
 
--- Удалить совпадения с Ctrl+l
+-- Удалить поисковые выделения с Ctrl+l 
 map("n", "<C-l>", ":noh<Cr>", opts)
 
 -- Повторно выбрать визуальный блок после отступа/выступа
@@ -36,10 +40,12 @@ map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
 -- YY/XX Копировать/вырезать в системный буфер обмена
-vim.cmd([[
-noremap YY "+y<CR>
-noremap XX "+x<CR>
-]])
+-- vim.cmd([[
+-- noremap YY "+y<CR>
+-- noremap XX "+x<CR>
+-- ]])
+cmd 'noremap <Leader>y "+y'
+cmd 'noremap <Leader>p "+p'
 
 -- Двойной ESC или <C-s> для перехода в normal режим в терминале
 map("t", "<C-s>", "<C-\\><C-n>", opts)
