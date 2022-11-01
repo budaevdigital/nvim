@@ -31,11 +31,10 @@ if not status_ok then
   return
 end
 
-local status_ok, mason = pcall(require, "mason")
-if not status_ok then 
-  return 
-end
-
+-- local status_ok, mason = pcall(require, "mason")
+-- if not status_ok then 
+--   return 
+-- end
 
 -- Показывать сообщения упаковщика во всплывающем окне. Выглядит круче
 packer.init({
@@ -47,44 +46,62 @@ packer.init({
 })
 
 -- Альтернативная установка упаковщика без функции
-packer.reset()
-local use = packer.use
+-- packer.reset()
+-- local use = packer.use
 
---[[
-=================================
-  Место для добавления плагинов
-=================================
-]]
--- Плагины и удобства в Nvim
-use({ -- Не забыть добавить самого менеджера плагинов packer
-  "wbthomason/packer.nvim",
-})
-use({ "williamboman/mason.nvim",
-  config = function()
-    require("config.mason.lua") -- Вызывает файл с дополнительными настройками из директории config
-  end,
-})
+-- Install your plugins here
+return packer.startup(function(use)
+  --[[
+  =================================
+    Место для добавления плагинов
+  =================================
+  --]]
+  -- Не забыть добавить самого менеджера плагинов packer
+  use ("wbthomason/packer.nvim")
+  -- use { 
+  --   "williamboman/mason.nvim",
+  --   config = function()
+  --     require("config.mason.lua") -- Вызывает файл с дополнительными настройками из директории config
+  --   end,
+  -- }
 
--- Всё, касаемо UI
-use({ -- Порт темы Tokyo Night от VSCode
-  "folke/tokyonight.nvim",
-  config = function()
-    vim.g.tokyonight_style = "night" -- Также возможны настройки: storm, night and day
-  end,
-})
+  -- Всё, касаемо UI
+  use ({ "svrana/neosolarized.nvim",   -- Тема для NVim
+    require = { "tjdevries/colorbuddy.nvim" },
+    config = function()
+      require("config.neosolarized") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+  })
+  use ({ "nvim-lualine/lualine.nvim",  -- Полоска статусов
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    config = function()
+      require("config.lualine") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+  })
+  -- use({ -- Порт темы Tokyo Night от VSCode
+  --   "folke/tokyonight.nvim",
+  --   require = { "tjdevries/colorbuddy.nvim" },
+  --   config = function()
+  --     vim.g.tokyonight_style = "night" -- Также возможны настройки: storm, night and day
+  --   end,
+  -- })
 
--- Всё, касаёмо ЯП и написанию кода
-use({ -- Устанавливает и настаивает плагин для ЯП (Tree-sitter)
- "nvim-treesitter/nvim-treesitter",
- run = ":TSUpdate",
- config = function()
-  require("config.treesitter") -- Вызывает файл с дополнительными настройками из директории config
- end,
-})
+  -- Всё, касаёмо ЯП и написанию кода
+  use ("wakatime/vim-wakatime")
 
--- Автоматически настроить конфигурацию после клонирования packer.nvim
--- Поместите это в конце после всех плагинов
-if PACKER_BOOTSTRAP then
-  require("packer").sync()
-end
+  -- use({ -- Устанавливает и настаивает плагин для ЯП (Tree-sitter)
+  --  "nvim-treesitter/nvim-treesitter",
+  --  run = ":TSUpdate",
+  --  config = function()
+  --   require("config.treesitter") -- Вызывает файл с дополнительными настройками из директории config
+  --  end,
+  -- })
+
+  -- Автоматически настроить конфигурацию после клонирования packer.nvim
+  -- Поместите это в конце после всех плагинов
+  if PACKER_BOOTSTRAP then
+    require("packer").sync()
+  end
+
+end)
 -- vim: ts=2 sw=2 et

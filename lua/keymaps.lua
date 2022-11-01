@@ -29,33 +29,50 @@ map("n", "*", "*<C-o>", opts)
 map("n", "n", "nzzzv", opts)
 map("n", "N", "Nzzzv", opts)
 
--- Переключить NetRW (Lexplore)
-map("n", "<Leader>le", ":Lex 30<Cr>", opts)
-
 -- Удалить поисковые выделения с Ctrl+l 
 map("n", "<C-l>", ":noh<Cr>", opts)
+
+-- Числовой инкремент \ декремент
+map("n", "+", "<C-a>", opts)
+map("n", "-", "<C-x>", opts)
+
+-- Переключить NetRW (Lexplore)
+map("n", "<Leader>le", ":Lex 30<Cr>", opts)
 
 -- Повторно выбрать визуальный блок после отступа/выступа
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
--- YY/XX Копировать/вырезать в системный буфер обмена
--- vim.cmd([[
--- noremap YY "+y<CR>
--- noremap XX "+x<CR>
--- ]])
-cmd 'noremap <Leader>y "+y'
-cmd 'noremap <Leader>p "+p'
+-- Копировать/вырезать в системный буфер обмена
+-- nnoremap <Leader>p "+p
+-- vnoremap <Leader>c "+y
+cmd "vnoremap <Leader>y '+y"
+cmd "nnoremap <Leader>p '+p"
 
 -- Двойной ESC или <C-s> для перехода в normal режим в терминале
 map("t", "<C-s>", "<C-\\><C-n>", opts)
 map("t", "<Esc><Esc>", "<C-\\><C-n>", opts)
 
--- Изменить размер окна с помощью Shift+<arrow>
-map("n", "<S-Up>", ":resize +2<CR>", opts)
-map("n", "<S-Down>", ":resize -2<CR>", opts)
-map("n", "<S-Left>", ":vertical resize -2<CR>", opts)
-map("n", "<S-Right>", ":vertical resize +2<CR>", opts)
+-- Новый таб
+map("n", "te", ":tabedit<Return>", opts) -- Новая пустая вкладка
+-- Разделение окна
+map("n", "ss", ":split<Return><C-w>w", opts)  
+map("n", "sv", ":vsplit<Return><C-w>w", opts)
+-- Выбор активного активного окна
+map("", "s<left>", "<C-w>h", opts)
+map("", "s<rignt>", "<C-w>l", opts)
+map("", "s<up>", "<C-w>k", opts)
+map("", "s<down>", "<C-w>j", opts)
+map("", "sh", "<C-w>h", opts)
+map("", "sl", "<C-w>l", opts)
+map("", "sj", "<C-w>k", opts)
+map("", "sk", "<C-w>j", opts)
+
+-- Изменить размер окна с помощью (Ctrl + w) + Arrows
+map("n", "<C-w><up>", ":resize +2<CR>", opts)
+map("n", "<C-w><down>", ":resize -2<CR>", opts)
+map("n", "<C-w><left>", ":vertical resize -2<CR>", opts)
+map("n", "<C-w><right>", ":vertical resize +2<CR>", opts)
 
 -- Перемещайте строку вверх и вниз с помощью J/K
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
