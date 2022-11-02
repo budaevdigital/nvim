@@ -1,12 +1,36 @@
+-- lua/config/lualine.lua
+
+-- Доку по настройке, можно посмотреть тут:
+-- https://github.com/nvim-lualine/lualine.nvim
+
+-- Иконки можно подобрать тут:
+-- https://www.nerdfonts.com/cheat-sheet
+
 local status_ok, lualine = pcall(require, "lualine")
-if not status_ok then
+if (not status_ok) then
     return
 end
 
-require("lualine").setup {
+
+
+-- local conditions = {
+--   buffer_not_empty = function()
+--     return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+--   end,
+--   hide_in_width = function()
+--     return vim.fn.winwidth(0) > 50
+--   end,
+--   check_git_workspace = function()
+--     local filepath = vim.fn.expand('%:p:h')
+--     local gitdir = vim.fn.finddir('.git', filepath .. ';')
+--     return gitdir and #gitdir > 0 and #gitdir < #filepath
+--   end,
+-- }
+
+lualine.setup {
     options = {
       icons_enabled = true,
-      theme = "everforest",
+      theme = 'onedark', -- solarized_dark | onedark
       component_separators = { left = "", right = ""},
       section_separators = { left = "", right = ""},
       disabled_filetypes = {
@@ -24,19 +48,56 @@ require("lualine").setup {
     },
     sections = {
       lualine_a = {"mode"},
-      lualine_b = {"branch", "diff", "diagnostics"},
+      lualine_b = {
+        "branch",
+        {
+          "diff",
+          colored = true, -- Отображает статус цветной разницы, если установлено значение true
+          diff_color = {
+            -- Здесь можно использовать те же значения цвета, что и в опции "Общий цвет".
+            added = { fg = green },    -- Изменить цветовые группы можно в настройках своей темы
+            modified = { fg = orange },
+            removed  = { fg = red },
+          },
+          symbols = { added = ' ', modified = ' ', removed = ' ' },
+          source = { added = add_count, modified = modified_count, removed = removed_count },
+        }, 
+
+      },
       lualine_c = {
         {
-            "filename",
-            file_status = true, -- Показывает статус файла
-            path = 0            -- Без указания директорий файла (цифра - глубина вложенности)
-        }
+          'diagnostics',
+          -- Таблица диагностических источников, доступными источниками являются:
+          --   'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic', 'coc', 'ale', 'vim_lsp'.
+          sources = { 'nvim_diagnostic', 'coc' },
+          -- Отображает диагностику для определенных типов серьезности
+          sections = { 'error', 'warn', 'info', 'hint' },
+          diagnostics_color = {
+            -- Задаём группы для цветов
+            error = 'DiagnosticVirtualTextError',
+            warn  = 'DiagnosticVirtualTextWarn',
+            info  = 'DiagnosticVirtualTextInfo',
+            hint  = 'DiagnosticVirtualTextHint',
+          },
+          symbols = { error = "", warn = "", info = "", hint = "ﯦ" },
+          colored = true,           -- Отображает состояние диагностики в цвете, если установлено значение true
+          update_in_insert = false, -- Обновите диагностику в режиме вставки  
+          always_visible = false,   -- Показывать диагностику, даже если ее нет
+        },
       },
       lualine_x = {
-        { "diagnostics",
-          source = { "nvim_diagnostic" }, 
-          symbols = { error = "", warn = "", info = "", hint = "ﯦ" } },
-          "encoding", "filetype"
+          { 
+            "filetype",
+            colored = true,   -- Отображает значок типа файла в цвете, если установлено значение true
+            icon_only = true, -- Отображать только значок для типа файла
+            icon = { align = "right" },
+          },
+          {
+            "filename",
+            file_status = true, -- Отображает статус файла (статус только для чтения, статус изменения)
+            path = 0            -- Без указания директорий файла (цифра - глубина вложенности)
+          },
+          "encoding",
       },
       lualine_y = {"progress"},
       lualine_z = {"location"}

@@ -20,12 +20,17 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Чтобы работали команды даже на русской раскладке
-cmd "set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
+vim.cmd([[set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz]])
+
+-- Сохранение \ Выход и т.д.
+map("n", "<Leader>w", ":w<Cr>", opts)
+map("n", "<Leader>q", ":q!<Cr>", opts) -- Обратить все изменения и выйти из NVim
+
 
 -- Выделяет все совпадающие слова (под курсором) в тексте
 map("n", "*", "*<C-o>", opts)
 
--- Показывает поисковые совпадения
+-- Показывает поисковые совпадения (следующее или предыдущее выделения)
 map("n", "n", "nzzzv", opts)
 map("n", "N", "Nzzzv", opts)
 
@@ -44,8 +49,6 @@ map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
 -- Копировать/вырезать в системный буфер обмена
--- nnoremap <Leader>p "+p
--- vnoremap <Leader>c "+y
 cmd "vnoremap <Leader>y '+y"
 cmd "nnoremap <Leader>p '+p"
 

@@ -56,8 +56,10 @@ return packer.startup(function(use)
     Место для добавления плагинов
   =================================
   --]]
+
   -- Не забыть добавить самого менеджера плагинов packer
   use ("wbthomason/packer.nvim")
+
   -- use { 
   --   "williamboman/mason.nvim",
   --   config = function()
@@ -66,18 +68,22 @@ return packer.startup(function(use)
   -- }
 
   -- Всё, касаемо UI
+  use ("tjdevries/colorbuddy.nvim") -- Для переопределения цветов
+
   use ({ "svrana/neosolarized.nvim",   -- Тема для NVim
     require = { "tjdevries/colorbuddy.nvim" },
     config = function()
       require("config.neosolarized") -- Вызывает файл с дополнительными настройками из директории config
     end,
   })
+
   use ({ "nvim-lualine/lualine.nvim",  -- Полоска статусов
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
       require("config.lualine") -- Вызывает файл с дополнительными настройками из директории config
     end,
   })
+
   -- use({ -- Порт темы Tokyo Night от VSCode
   --   "folke/tokyonight.nvim",
   --   require = { "tjdevries/colorbuddy.nvim" },
