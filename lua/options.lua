@@ -2,7 +2,7 @@
 
 -- С полным перечнем команд и их описанием можно ознакомиться тут:
 -- https://github.com/vim/vim/blob/master/runtime/doc/options.txt
--- TODO
+
 vim.opt.spelllang= { 'en_us', 'ru' }
 vim.opt.backup = false
 vim.opt.swapfile = false      -- Отключение резервного копирования

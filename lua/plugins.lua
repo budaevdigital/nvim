@@ -31,11 +31,6 @@ if not status_ok then
   return
 end
 
--- local status_ok, mason = pcall(require, "mason")
--- if not status_ok then 
---   return 
--- end
-
 -- Показывать сообщения упаковщика во всплывающем окне. Выглядит круче
 packer.init({
   display = {
@@ -93,7 +88,10 @@ return packer.startup(function(use)
   -- })
 
   -- Всё, касаёмо ЯП и написанию кода
-  use ("wakatime/vim-wakatime")
+  use ("wakatime/vim-wakatime") -- Трекер времени программиста. Ввод своего Api командой (:WakaTimeApiKey)
+
+  use ("neovim/nvim-lspconfig")
+
 
   -- use({ -- Устанавливает и настаивает плагин для ЯП (Tree-sitter)
   --  "nvim-treesitter/nvim-treesitter",
