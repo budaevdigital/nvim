@@ -8,9 +8,15 @@ if not luasnip_status_ok then
   return
 end
 
-local lspkind = require "lspkind"
+local lspkind = require("lspkind")
 
-cmp.setup {
+-- Add icons to the popup
+lspkind.init({
+  mode = "symbol",
+})
+
+
+cmp.setup ({
   -- Load snippet support
   snippet = {
     expand = function(args)
@@ -69,5 +75,10 @@ cmp.setup {
   formatting = {
     format = lspkind.cmp_format({ with_text = true, maxwidth = 80 })
   }
-}
+  -- window = {
+  --   documentation = {
+  --     border = { "‚ï≠", "‚îÄ", "‚ïÆ", "‚îÇ", "‚ïØ", "‚îÄ", "‚ï∞", "‚îÇ" },
+  --   },
+  -- },
+})
 

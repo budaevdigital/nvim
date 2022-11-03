@@ -9,6 +9,7 @@
 --   command_mode      = "c",
 
 -- Закинем в переменные нужные аргументы и значение api_nvim, для сокращения
+local set = vim.keymap.set
 local map = vim.api.nvim_set_keymap
 local cmd = vim.cmd
 local opts = { noremap = true, silent = true }
@@ -20,11 +21,12 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Чтобы работали команды даже на русской раскладке
-vim.cmd([[set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz]])
+cmd([[set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz]])
 
 -- Сохранение \ Выход и т.д.
-map("n", "<Leader>w", ":w<Cr>", opts)
-map("n", "<Leader>q", ":q!<Cr>", opts) -- Обратить все изменения и выйти из NVim
+map("n", "<Leader>w", ":w<CR>", opts)
+map("n", "<Leader>q", ":q<CR>", opts)
+map("n", "<Leader>XX", ":qall!<CR>", opts) -- Обратить все изменения и выйти из NVim
 
 
 -- Выделяет все совпадающие слова (под курсором) в тексте
@@ -34,7 +36,7 @@ map("n", "*", "*<C-o>", opts)
 map("n", "n", "nzzzv", opts)
 map("n", "N", "Nzzzv", opts)
 
--- Удалить поисковые выделения с Ctrl+l 
+-- Удалить поисковые выделения с Ctrl+l
 map("n", "<C-l>", ":noh<Cr>", opts)
 
 -- Числовой инкремент \ декремент
@@ -59,7 +61,7 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", opts)
 -- Новый таб
 map("n", "te", ":tabedit<Return>", opts) -- Новая пустая вкладка
 -- Разделение окна
-map("n", "ss", ":split<Return><C-w>w", opts)  
+map("n", "ss", ":split<Return><C-w>w", opts)
 map("n", "sv", ":vsplit<Return><C-w>w", opts)
 -- Выбор активного активного окна
 map("", "s<left>", "<C-w>h", opts)
@@ -85,4 +87,33 @@ map("x", "K", ":move '<-2<CR>gv-gv", opts)
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", expr)
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", expr)
 
+-- Команды для Telescope (поиск)
+local builtin = require("telescope.builtin")
 
+set("n", ";f", function()
+    builtin.find_files({ no_ignore=false, hidden=true }) end, {}) -- :lua require('telescope.builtin').find_files({layout_strategy='vertical',layout_config={width=0.5}})
+set("n", ";r", builtin.live_grep, {}) -- ":lua require('telescope.builtin').live_grep({grep_open_files=true})", {}) 
+set("n", "\\\\", builtin.buffers, {})
+set("n", ";t", builtin.help_tags, {})
+set("n", ";;", builtin.resume, {})
+set("n", ";e", builtin.diagnostics, {})
+
+local telescope = require("telescope")
+telescope.load_extension("file_browser")
+
+local function telescope_buffer_dir()
+    return vim.fn.expand("%:p:h")
+end
+-- Браузер файлов Telescope
+set("n", ";bf", function()
+  telescope.extensions.file_browser.file_browser({
+    path = "%:p:h",
+    cwd = telescope_buffer_dir(),
+    respect_gitignore = false,
+    hidden = true,
+    grouped = true,
+    previewer = false,
+    initial_mode = "normal",
+    layout_config = { height = 20, width = 0.4 }
+  })
+end)

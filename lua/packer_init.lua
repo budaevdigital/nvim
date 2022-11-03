@@ -70,26 +70,26 @@ return packer.startup(function(use)
 
   use ({ "onsails/lspkind-nvim",  -- Пиктограммы как в VSCode
     config = function()
-      require("lsp.lspkind") -- Вызывает файл с дополнительными настройками из директории config
+      require("lsp.lspkind")
     end,
   })
   -- Полоска статусов
-  use ({ "nvim-lualine/lualine.nvim",  
+  use ({ "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
-      require("plugins.lualine") -- Вызывает файл с дополнительными настройками из директории config
+      require("plugins.lualine")
     end,
   })
 
   -- [[ Всё, касаёмо ЯП и написанию кода ]] --
 
   -- Трекер времени программиста. Ввод своего Api командой (:WakaTimeApiKey)
-  use ("wakatime/vim-wakatime") 
+  use ("wakatime/vim-wakatime")
 
   -- Настройка LSP для ЯП
   use ({ "neovim/nvim-lspconfig",
     config = function()
-      require("lsp.lspconfig") -- Вызывает файл с дополнительными настройками из директории config
+      require("lsp.lspconfig")
     end,
   })
 
@@ -104,24 +104,49 @@ return packer.startup(function(use)
       "saadparwaiz1/cmp_luasnip",
     },
     config = function()
-      require("lsp.nvim-cmp") -- Вызывает файл с дополнительными настройками из директории config
+      require("lsp.nvim-cmp")
     end,
   })
+
+  -- Автозакрытие тегов
+  use ({ "windwp/nvim-ts-autotag",
+    config = function()
+      require("plugins.auto_tag_pair")
+    end, })
+
+  -- Автозакрытие скобок
+  use ({ "windwp/nvim-autopairs",
+    config = function()
+      require("plugins.auto_tag_pair")
+    end, })
 
   -- Подсветка синтаксиса и другие функции
   use ({ "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("plugins.treesitter") -- Вызывает файл с дополнительными настройками из директории config
+      require("plugins.treesitter")
     end,
-    run = function() 
-      require("nvim-treesitter.install").update({ with_sync = true }) 
+    run = function()
+      require("nvim-treesitter.install").update({ with_sync = true })
     end, })
 
+  -- Удобные поисковик (файлов, тексты и т.д.)
+  use ({ "nvim-telescope/telescope.nvim",
+    requires = { 
+      "nvim-lua/plenary.nvim",
+      "BurntSushi/ripgrep", -- Нужно установить ripgrep в саму систему (sudo dnf install ripgrep)
+    },
+    config = function()
+      require("plugins.telescope")
+    end, })
+  use ({ "nvim-telescope/telescope-file-browser.nvim",
+    config = function()
+      require("plugins.telescope")
+    end, })
 
   -- Удобный инсталятор LSP, DAP, линтеров и форматеров для ЯП
   use ({ "williamboman/mason.nvim",
     config = function()
-      require("plugins.mason") -- Вызывает файл с дополнительными настройками из директории config
+      require("plugins.mason")
     end,
   })
 
