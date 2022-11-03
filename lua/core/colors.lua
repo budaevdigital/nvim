@@ -6,14 +6,16 @@
 
 local status_ok, neosol = pcall(require, "neosolarized")
 if (not status_ok) then
-    return
+  vim.notify("neosolarized not found!")
+  return
 end
 
 neosol.setup({ comment_italics = true, })
 
 local status_ok, cb = pcall(require, "colorbuddy.init")
 if (not status_ok) then
-    return
+  vim.notify("colorbuddy.init not found!")
+  return
 end
 
 local Color = cb.Color
@@ -26,41 +28,7 @@ local styles = cb.styles
 -- Создадим цвета
 Color.new("todocolor", "#9BE24A")  -- Ярко-ядовитый для TODO
 Color.new("foractiveline", "#464646") -- Для подсветки номера действующей строки
-Color.new("background", "#2E3440") -- Цвет текста #38214C
-
-Color.new("nord_0", "#2E3440")   -- Серый
-Color.new("nord_1","#3B4252")    -- Серый_2
-Color.new("nord_2", "#434C5E")   -- Серый_3
-Color.new("nord_3", "#4C566A")   -- Серый_4
-Color.new("nord_3_light", "#616E88")  -- Светло-серый
-Color.new("nord_4", "#D8DEE9")   -- Затемненно-белый
-Color.new("nord_5", "#E5E9F0")   -- Белый
-Color.new("nord_6", "#ECEFF4")   -- Ярко-белый
-Color.new("nord_7", "#8FBCBB")   -- Светло-зеленный
-Color.new("nord_8", "#88C0D0")   -- Светло-голубой
-Color.new("nord_9", "#81A1C1")   -- Светло-синний
-Color.new("nord_10", "#5E81AC")  -- Синий
-Color.new("nord_11", "#BF616A")  -- Красный
-Color.new("nord_12", "#D08770")  -- Оранжевый
-Color.new("nord_13", "#EBCB8B")  -- Желтый
-Color.new("nord_14", "#A3BE8C")  -- Оливковый
-Color.new("nord_15", "#B48EAD")  -- Светло-малиновый
-
--- Переопределение существующих цветов
-Color.new("bg", "#2E3440")       -- Цвет текста #38214C
-Color.new("fg", "#292929")       -- Цвет текста
-Color.new("white", "#FFFFFF")    -- #D8DEE9
-Color.new("red", "#BF616A")
-Color.new("green", "#6BAC6E")
-Color.new("yellow", "#EBCB8B")
-Color.new("blue", "#6CA7E2")     -- #81A1C1
-Color.new("aqua", "#A3BE8C")
-Color.new("cyan", "#8FBCBB")
-Color.new("purple", "#B48EAD")
-Color.new("violet", "#B48EAD")
-Color.new("orange", "#D08770")
-Color.new("gray", "#C7C4C5")
-
+Color.new("background", "#9BE24A") -- Цвет фона (переопределен, для использования) #38214C #2E3440
 
 -- Шаблон и параметры наименований Coloring(group, guibg, guifg, gui, ctermbg, ctermfg)
 Group.new("TODO", colors.todocolor, colors.none, styles.bold) -- Делает TO`DO более выразительным в тексте
@@ -74,19 +42,19 @@ local cInfo = groups.Information.fg
 local cWarn = groups.Warning.fg
 local cHint = groups.Hint.fg
 
-Group.new("DiagnosticVirtualTextError", cError, cError:dark():dark():dark():dark(), styles.NONE)
-Group.new("DiagnosticVirtualTextInfo", cInfo, cInfo:dark():dark():dark(), styles.NONE)
-Group.new("DiagnosticVirtualTextWarn", cWarn, cWarn:dark():dark():dark(), styles.NONE)
-Group.new("DiagnosticVirtualTextHint", cHint, cHint:dark():dark():dark(), styles.NONE)
+-- Group.new("DiagnosticVirtualTextError", cError, cError:dark():dark():dark():dark(), styles.NONE)
+-- Group.new("DiagnosticVirtualTextInfo", cInfo, cInfo:dark():dark():dark(), styles.NONE)
+-- Group.new("DiagnosticVirtualTextWarn", cWarn, cWarn:dark():dark():dark(), styles.NONE)
+-- Group.new("DiagnosticVirtualTextHint", cHint, cHint:dark():dark():dark(), styles.NONE)
 Group.new("DiagnosticUnderlineError", colors.none, colors.none, styles.undercurl, cError)
 Group.new("DiagnosticUnderlineWarn", colors.none, colors.none, styles.undercurl, cWarn)
 Group.new("DiagnosticUnderlineInfo", colors.none, colors.none, styles.undercurl, cInfo)
 Group.new("DiagnosticUnderlineHint", colors.none, colors.none, styles.undercurl, cHint)
 
 
-local M = {}
+local ColorScheme = {}
 
-M.night_dark = {
+ColorScheme.night_dark = {
     bg = "#2E3440",
     fg = "#292929",
     pink = "#B48EAD",
@@ -97,7 +65,7 @@ M.night_dark = {
     red = "#BF616A",
 }
 
-M.onedark_dark = {
+ColorScheme.onedark = {
   bg = "#282c34",
   fg = "#b2bbcc",
   pink = "#c678dd",
@@ -108,7 +76,7 @@ M.onedark_dark = {
   red = "#e86671",
 }
 
-M.monokai = {
+ColorScheme.monokai = {
   bg = "#202328", --default: #272a30
   fg = "#f8f8f0",
   pink = "#f92672",
@@ -119,7 +87,7 @@ M.monokai = {
   red = "#e95678",
 }
 
-M.rose_pine = {
+ColorScheme.rose_pine = {
   bg = "#111019", --default: #191724
   fg = "#e0def4",
   pink = "#eb6f92",
@@ -130,4 +98,4 @@ M.rose_pine = {
   red = "#ebbcba",
 }
 
-return M
+return ColorScheme

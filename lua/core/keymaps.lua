@@ -85,4 +85,4 @@ map("x", "K", ":move '<-2<CR>gv-gv", opts)
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", expr)
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", expr)
 
--- vim: ts=2 sw=2 et
+

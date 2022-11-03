@@ -33,7 +33,7 @@ vim.opt.encoding = "utf-8"    -- Дополнительная кодировка
 vim.opt.showmode = false      -- Убирает сообщение -- INSERT -- внизу
 vim.opt.showcmd = true        -- Показывает ввод команды
 vim.opt.cmdheight = 1         -- Для лучшей читаемости команд (высота)
-vim.opt.laststatus = 2        -- Показывать строку статуса всегда и во всех окнах
+vim.opt.laststatus = 2        -- Показывать строку статуса всегда и во всех окнах (цифра 2)
 
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
@@ -54,14 +54,14 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 vim.api.nvim_create_autocmd("InsertLeave", {
     pattern = "*",
     command = "set nopaste"
-})
+})  
 
 vim.opt.formatoptions:append { "r" }
 
 
 -- highlights
-vim.g.colors_name = "NeoSolarized" -- вместо cmd[[silent! colorscheme tokyonight]]
-vim.o.background = "dark"     -- Темная тема для фона
+-- vim.g.colors_name = "NeoSolarized" -- вместо cmd[[silent! colorscheme tokyonight]]
+-- vim.o.background = "dark"     -- Темная тема для фона
 vim.opt.termguicolors = true  -- Требуется для некоторых тем
 vim.opt.signcolumn = "yes"    -- Всегда показывайте столбец signcolumn (там где цифры строк), в противном случае это приведет к смещению текста
 vim.opt.cursorline = true     -- Выделяет текущую строку курсора (может замедлить работу пользовательского интерфейса)

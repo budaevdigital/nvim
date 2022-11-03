@@ -41,8 +41,8 @@ packer.init({
 })
 
 -- Альтернативная установка упаковщика без функции
--- packer.reset()
--- local use = packer.use
+packer.reset()
+local use = packer.use
 
 -- Install your plugins here
 return packer.startup(function(use)
@@ -55,18 +55,12 @@ return packer.startup(function(use)
   -- Не забыть добавить самого менеджера плагинов packer
   use ("wbthomason/packer.nvim")
 
-  -- use { 
-  --   "williamboman/mason.nvim",
-  --   config = function()
-  --     require("config.mason.lua") -- Вызывает файл с дополнительными настройками из директории config
-  --   end,
-  -- }
-
-  -- Всё, касаемо UI
+  -- [[ Всё, касаемо UI ]] --
   use ("nvim-tree/nvim-web-devicons")
 
   use ("tjdevries/colorbuddy.nvim") -- Для переопределения цветов
 
+  -- Color schemes
   use ({ "svrana/neosolarized.nvim",   -- Тема для NVim
     require = { "tjdevries/colorbuddy.nvim" },
     config = function()
@@ -74,30 +68,57 @@ return packer.startup(function(use)
     end,
   })
 
-  use ({ "nvim-lualine/lualine.nvim",  -- Полоска статусов
+  use ({ "onsails/lspkind-nvim",  -- Пиктограммы как в VSCode
+    config = function()
+      require("lsp.lspkind") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+  })
+  -- Полоска статусов
+  use ({ "nvim-lualine/lualine.nvim",  
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
       require("plugins.lualine") -- Вызывает файл с дополнительными настройками из директории config
     end,
   })
 
-  -- use({ -- Порт темы Tokyo Night от VSCode
-  --   "folke/tokyonight.nvim",
-  --   require = { "tjdevries/colorbuddy.nvim" },
-  --   config = function()
-  --     vim.g.tokyonight_style = "night" -- Также возможны настройки: storm, night and day
-  --   end,
-  -- })
+  -- [[ Всё, касаёмо ЯП и написанию кода ]] --
 
-  -- Всё, касаёмо ЯП и написанию кода
-  use ("wakatime/vim-wakatime") -- Трекер времени программиста. Ввод своего Api командой (:WakaTimeApiKey)
+  -- Трекер времени программиста. Ввод своего Api командой (:WakaTimeApiKey)
+  use ("wakatime/vim-wakatime") 
 
+  -- Настройка LSP для ЯП
   use ({ "neovim/nvim-lspconfig",
     config = function()
       require("lsp.lspconfig") -- Вызывает файл с дополнительными настройками из директории config
     end,
   })
 
+  -- Автодополнение
+  use ({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "L3MON4D3/LuaSnip",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-buffer",
+      "saadparwaiz1/cmp_luasnip",
+    },
+    config = function()
+      require("lsp.nvim-cmp") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+  })
+
+  -- Подсветка синтаксиса и другие функции
+  use ({ "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("plugins.treesitter") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+    run = function() 
+      require("nvim-treesitter.install").update({ with_sync = true }) 
+    end, })
+
+
+  -- Удобный инсталятор LSP, DAP, линтеров и форматеров для ЯП
   use ({ "williamboman/mason.nvim",
     config = function()
       require("plugins.mason") -- Вызывает файл с дополнительными настройками из директории config
@@ -106,14 +127,6 @@ return packer.startup(function(use)
 
   use ("williamboman/mason-lspconfig.nvim")
 
-  -- use({ -- Устанавливает и настаивает плагин для ЯП (Tree-sitter)
-  --  "nvim-treesitter/nvim-treesitter",
-  --  run = ":TSUpdate",
-  --  config = function()
-  --   require("config.treesitter") -- Вызывает файл с дополнительными настройками из директории config
-  --  end,
-  -- })
-
   -- Автоматически настроить конфигурацию после клонирования packer.nvim
   -- Поместите это в конце после всех плагинов
   if PACKER_BOOTSTRAP then
@@ -121,4 +134,3 @@ return packer.startup(function(use)
   end
 
 end)
--- vim: ts=2 sw=2 et
