@@ -56,12 +56,16 @@ return packer.startup(function(use)
   use ("wbthomason/packer.nvim")
 
   -- [[ Всё, касаемо UI ]] --
-  use ("nvim-tree/nvim-web-devicons")
+  use ({ "nvim-tree/nvim-web-devicons",
+    run = function()
+      require("nvim-web-devicons").setup({ default = true, override = {} })
+    end,
+  })
 
   use ("tjdevries/colorbuddy.nvim") -- Для переопределения цветов
 
   -- Color schemes
-  use ({ "svrana/neosolarized.nvim",   -- Тема для NVim
+  use ({ "svrana/neosolarized.nvim",
     require = { "tjdevries/colorbuddy.nvim" },
     config = function()
       require("core.colors") -- Вызывает файл с дополнительными настройками из директории config
@@ -80,6 +84,22 @@ return packer.startup(function(use)
       require("plugins.lualine")
     end,
   })
+
+  -- Найстройка отображения табов буферов (окон)
+  use ({ "akinsho/bufferline.nvim",
+    tag = "v3.*", 
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = function()
+      require("plugins.bufferline")
+    end,
+  })
+
+  -- Оповещения
+  use ("rcarriga/nvim-notify")
+
+  -- Раскрашивает HEX-код в его цвет (прямо в коде)
+  use ("norcalli/nvim-colorizer.lua")
+
 
   -- [[ Всё, касаёмо ЯП и написанию кода ]] --
 

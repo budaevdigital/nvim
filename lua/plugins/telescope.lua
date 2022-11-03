@@ -1,4 +1,4 @@
--- plugins/telescope.lua
+-- lua/plugins/telescope.lua
 
 -- Подробности про настройку тут:
 -- https://github.com/nvim-telescope/telescope.nvim-telescope

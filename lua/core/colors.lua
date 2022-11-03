@@ -66,36 +66,50 @@ ColorScheme.night_dark = {
 }
 
 ColorScheme.onedark = {
-  bg = "#282c34",
-  fg = "#b2bbcc",
-  pink = "#c678dd",
-  green = "#98c379",
-  cyan = "#56b6c2",
-  yellow = "#e5c07b",
-  orange = "#d19a66",
-  red = "#e86671",
+  bg = "#282C34",
+  fg = "#B2BBCC",
+  pink = "#C678DD",
+  green = "#98C379",
+  cyan = "#56B6C2",
+  yellow = "#E5C07B",
+  orange = "#D19A66",
+  red = "#E86671",
 }
 
 ColorScheme.monokai = {
   bg = "#202328", --default: #272a30
-  fg = "#f8f8f0",
-  pink = "#f92672",
-  green = "#a6e22e",
-  cyan = "#66d9ef",
-  yellow = "#e6db74",
-  orange = "#fd971f",
-  red = "#e95678",
+  fg = "#F8F8F0",
+  pink = "#F92672",
+  green = "#A6E22E",
+  cyan = "#66D9EF",
+  yellow = "#E6DB74",
+  orange = "#FD971F",
+  red = "#E95678",
 }
 
 ColorScheme.rose_pine = {
   bg = "#111019", --default: #191724
-  fg = "#e0def4",
-  pink = "#eb6f92",
-  green = "#9ccfd8",
-  cyan = "#31748f",
-  yellow = "#f6c177",
-  orange = "#2a2837",
-  red = "#ebbcba",
+  fg = "#E0DEF4",
+  pink = "#EB6F92",
+  green = "#9CCFD8",
+  cyan = "#31748F",
+  yellow = "#F6C177",
+  orange = "#2A2837",
+  red = "#EBBCBA",
+}
+
+-- Цвета табов
+ColorScheme.tab_color = {
+  sep_fg = "#073642",
+  sep_bg = "#002B36",
+  sel_sep_fg = "#073642",
+  sel_sep_bg = "#657B83",
+  back_ui_fg = "#657B83",
+  back_ui_bg = "#282C34", -- Фон неактивного таба
+  buf_sel_fg = "#FDF6E3",
+  buf_sel_bg = "#F8F8F0",
+  buf_sel_font = "bold",
+  fill_bg = "#073642",
 }
 
 return ColorScheme

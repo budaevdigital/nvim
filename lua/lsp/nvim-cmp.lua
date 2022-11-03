@@ -1,9 +1,15 @@
-local cmp_status_ok, cmp = pcall(require, 'cmp')
+-- lua/lsp/lspkind.lua
+
+-- Подробности про настройку тут:
+-- https://github.com/hrsh7th/nvim-cmp
+-- https://github.com/L3MON4D3/LuaSnip
+
+local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
   return
 end
 
-local luasnip_status_ok, luasnip = pcall(require, 'luasnip')
+local luasnip_status_ok, luasnip = pcall(require, "luasnip")
 if not luasnip_status_ok then
   return
 end
@@ -15,7 +21,6 @@ lspkind.init({
   mode = "symbol",
 })
 
-
 cmp.setup ({
   -- Load snippet support
   snippet = {
@@ -26,25 +31,25 @@ cmp.setup ({
 
 -- Completion settings
   completion = {
-    --completeopt = 'menu,menuone,noselect'
+    completeopt = "menu,menuone,noselect",
     keyword_length = 2
   },
 
   -- Key mapping
   mapping = {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
 
     -- Tab mapping
-    ['<Tab>'] = function(fallback)
+    ["<Tab>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -53,7 +58,7 @@ cmp.setup ({
         fallback()
       end
     end,
-    ['<S-Tab>'] = function(fallback)  
+    ["<S-Tab>"] = function(fallback)  
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -66,10 +71,10 @@ cmp.setup ({
 
   -- Load sources, see: https://github.com/topics/nvim-cmp
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'path' },
-    { name = 'buffer' },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "path" },
+    { name = "buffer" },
   },
 
   formatting = {

@@ -1,4 +1,4 @@
--- plugins/auto_tag_pair.lua
+-- lua/plugins/auto_tag_pair.lua
 
 -- Подробнее про настройку:
 -- https://github.com/windwp/nvim-autopairs

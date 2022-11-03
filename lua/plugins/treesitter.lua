@@ -1,4 +1,4 @@
--- lua/config/treesitter.lua
+-- lua/plugins/treesitter.lua
 
 -- Доку по настройке, можно посмотреть тут:
 -- https://github.com/nvim-treesitter/nvim-treesitter

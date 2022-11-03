@@ -1,4 +1,4 @@
--- lua/config/mason.lua
+-- lua/plugins/mason.lua
 
 local status_ok, mason = pcall(require, "mason")
 if (not status_ok) then

@@ -1,4 +1,4 @@
--- lua/config/lualine.lua
+-- lua/plugins/lualine.lua
 
 -- Доку по настройке, можно посмотреть тут:
 -- https://github.com/nvim-lualine/lualine.nvim

@@ -8,6 +8,11 @@ require("core.options")
 require("core.keymaps")
 require("core.colors")
 require("lsp.lspconfig")
+require("lsp.lspkind")
+require("lsp.nvim-cmp")
+require("plugins.lualine")
+require("plugins.telescope")
+require("plugins.bufferline")
 require("plugins.lualine")
 
 -- Функция, которая проверят систему и возвращает bool значение
