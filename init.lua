@@ -1,9 +1,14 @@
 -- init.lua
 
-require("options")
-require("highlights")
-require("keymaps")
-require("plugins")
+-- Ознакомиться со структурой директорий Lua файлов на примере:
+-- https://github.com/nanotee/nvim-lua-guide#where-to-put-lua-files
+
+require("packer_init")
+require("core.options")
+require("core.keymaps")
+require("core.colors")
+require("lsp.lspconfig")
+require("plugins.lualine")
 
 -- Функция, которая проверят систему и возвращает bool значение
 -- Нужна для синхронизации янкирования и системного клипбоарда
@@ -17,7 +22,7 @@ local is_windows = system "win32"
 local is_macos = system "macunix"
 
 if is_windows then
-    require("config.windows")
+    require("core.config.windows")
 elseif is_unix or is_macos then
-    require("config.unix")
+    require("core.config.unix")
 end

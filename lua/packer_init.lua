@@ -63,19 +63,21 @@ return packer.startup(function(use)
   -- }
 
   -- Всё, касаемо UI
+  use ("nvim-tree/nvim-web-devicons")
+
   use ("tjdevries/colorbuddy.nvim") -- Для переопределения цветов
 
   use ({ "svrana/neosolarized.nvim",   -- Тема для NVim
     require = { "tjdevries/colorbuddy.nvim" },
     config = function()
-      require("config.neosolarized") -- Вызывает файл с дополнительными настройками из директории config
+      require("core.colors") -- Вызывает файл с дополнительными настройками из директории config
     end,
   })
 
   use ({ "nvim-lualine/lualine.nvim",  -- Полоска статусов
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
-      require("config.lualine") -- Вызывает файл с дополнительными настройками из директории config
+      require("plugins.lualine") -- Вызывает файл с дополнительными настройками из директории config
     end,
   })
 
@@ -90,8 +92,19 @@ return packer.startup(function(use)
   -- Всё, касаёмо ЯП и написанию кода
   use ("wakatime/vim-wakatime") -- Трекер времени программиста. Ввод своего Api командой (:WakaTimeApiKey)
 
-  use ("neovim/nvim-lspconfig")
+  use ({ "neovim/nvim-lspconfig",
+    config = function()
+      require("lsp.lspconfig") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+  })
 
+  use ({ "williamboman/mason.nvim",
+    config = function()
+      require("plugins.mason") -- Вызывает файл с дополнительными настройками из директории config
+    end,
+  })
+
+  use ("williamboman/mason-lspconfig.nvim")
 
   -- use({ -- Устанавливает и настаивает плагин для ЯП (Tree-sitter)
   --  "nvim-treesitter/nvim-treesitter",

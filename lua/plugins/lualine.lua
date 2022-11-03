@@ -46,8 +46,7 @@ lualine.setup {
           },
           symbols = { added = ' ', modified = ' ', removed = ' ' },
           source = { added = add_count, modified = modified_count, removed = removed_count },
-        }, 
-
+        },
       },
       lualine_c = {
         {
@@ -59,12 +58,12 @@ lualine.setup {
           sections = { 'error', 'warn', 'info', 'hint' },
           diagnostics_color = {
             -- Задаём группы для цветов
-            error = 'DiagnosticVirtualTextError',
-            warn  = 'DiagnosticVirtualTextWarn',
-            info  = 'DiagnosticVirtualTextInfo',
-            hint  = 'DiagnosticVirtualTextHint',
+            error = { fg = red },
+            warn  = { fg = yellow },
+            info  = { fg = aqua }, 
+            hint  = { fg = violet }, 
           },
-          symbols = { error = "", warn = "", info = "", hint = "ﯦ" },
+          symbols = { error = " ", warn = " ", info = " ", hint = " " },
           colored = true,           -- Отображает состояние диагностики в цвете, если установлено значение true
           update_in_insert = false, -- Обновите диагностику в режиме вставки  
           always_visible = false,   -- Показывать диагностику, даже если ее нет

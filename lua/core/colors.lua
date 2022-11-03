@@ -26,8 +26,8 @@ local styles = cb.styles
 -- Создадим цвета
 Color.new("todocolor", "#9BE24A")  -- Ярко-ядовитый для TODO
 Color.new("foractiveline", "#464646") -- Для подсветки номера действующей строки
-Color.new("background", "#2E3440") -- Цвет текста 
-Color.new("fg", "#292929")       -- Цвет текста
+Color.new("background", "#2E3440") -- Цвет текста #38214C
+
 Color.new("nord_0", "#2E3440")   -- Серый
 Color.new("nord_1","#3B4252")    -- Серый_2
 Color.new("nord_2", "#434C5E")   -- Серый_3
@@ -47,16 +47,19 @@ Color.new("nord_14", "#A3BE8C")  -- Оливковый
 Color.new("nord_15", "#B48EAD")  -- Светло-малиновый
 
 -- Переопределение существующих цветов
-Color.new("white", "#D8DEE9")
+Color.new("bg", "#2E3440")       -- Цвет текста #38214C
+Color.new("fg", "#292929")       -- Цвет текста
+Color.new("white", "#FFFFFF")    -- #D8DEE9
 Color.new("red", "#BF616A")
-Color.new("green", "#A3BE8C")
+Color.new("green", "#6BAC6E")
 Color.new("yellow", "#EBCB8B")
-Color.new("blue", "#81A1C1")
+Color.new("blue", "#6CA7E2")     -- #81A1C1
 Color.new("aqua", "#A3BE8C")
 Color.new("cyan", "#8FBCBB")
 Color.new("purple", "#B48EAD")
 Color.new("violet", "#B48EAD")
 Color.new("orange", "#D08770")
+Color.new("gray", "#C7C4C5")
 
 
 -- Шаблон и параметры наименований Coloring(group, guibg, guifg, gui, ctermbg, ctermfg)
@@ -79,3 +82,52 @@ Group.new("DiagnosticUnderlineError", colors.none, colors.none, styles.undercurl
 Group.new("DiagnosticUnderlineWarn", colors.none, colors.none, styles.undercurl, cWarn)
 Group.new("DiagnosticUnderlineInfo", colors.none, colors.none, styles.undercurl, cInfo)
 Group.new("DiagnosticUnderlineHint", colors.none, colors.none, styles.undercurl, cHint)
+
+
+local M = {}
+
+M.night_dark = {
+    bg = "#2E3440",
+    fg = "#292929",
+    pink = "#B48EAD",
+    green = "#6BAC6E",
+    cyan = "#8FBCBB",
+    yellow = "#EBCB8B",
+    orange = "#D08770",
+    red = "#BF616A",
+}
+
+M.onedark_dark = {
+  bg = "#282c34",
+  fg = "#b2bbcc",
+  pink = "#c678dd",
+  green = "#98c379",
+  cyan = "#56b6c2",
+  yellow = "#e5c07b",
+  orange = "#d19a66",
+  red = "#e86671",
+}
+
+M.monokai = {
+  bg = "#202328", --default: #272a30
+  fg = "#f8f8f0",
+  pink = "#f92672",
+  green = "#a6e22e",
+  cyan = "#66d9ef",
+  yellow = "#e6db74",
+  orange = "#fd971f",
+  red = "#e95678",
+}
+
+M.rose_pine = {
+  bg = "#111019", --default: #191724
+  fg = "#e0def4",
+  pink = "#eb6f92",
+  green = "#9ccfd8",
+  cyan = "#31748f",
+  yellow = "#f6c177",
+  orange = "#2a2837",
+  red = "#ebbcba",
+}
+
+return M
