@@ -31,4 +31,3 @@ if is_windows then
 elseif is_unix or is_macos then
     require("core.config.unix")
 end
-

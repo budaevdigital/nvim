@@ -42,10 +42,13 @@ local cInfo = groups.Information.fg
 local cWarn = groups.Warning.fg
 local cHint = groups.Hint.fg
 
+-- Цвета "Текста рядом" с ошибкой
 -- Group.new("DiagnosticVirtualTextError", cError, cError:dark():dark():dark():dark(), styles.NONE)
 -- Group.new("DiagnosticVirtualTextInfo", cInfo, cInfo:dark():dark():dark(), styles.NONE)
 -- Group.new("DiagnosticVirtualTextWarn", cWarn, cWarn:dark():dark():dark(), styles.NONE)
 -- Group.new("DiagnosticVirtualTextHint", cHint, cHint:dark():dark():dark(), styles.NONE)
+
+-- Цвета подчеркивания ошибок
 Group.new("DiagnosticUnderlineError", colors.none, colors.none, styles.undercurl, cError)
 Group.new("DiagnosticUnderlineWarn", colors.none, colors.none, styles.undercurl, cWarn)
 Group.new("DiagnosticUnderlineInfo", colors.none, colors.none, styles.undercurl, cInfo)

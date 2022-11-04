@@ -1,12 +1,18 @@
 -- lua/plugins/mason.lua
 
-local status_ok, mason = pcall(require, "mason")
-if (not status_ok) then
+-- Подробности о настройке тут:
+-- https://github.com/williamboman/mason.nvim
+
+
+local mason_status_ok, mason = pcall(require, "mason")
+if (not mason_status_ok) then
+    vim.notify("mason not found!")
     return
 end
 
-local status_ok, mason_config = pcall(require, "mason-lspconfig")
-if (not status_ok) then
+local lspconfig_status_ok, mason_config = pcall(require, "mason-lspconfig")
+if (not lspconfig_status_ok) then
+    vim.notify("mason-lspconfig not found!")
     return
 end
 
@@ -97,31 +103,31 @@ end
 --     automatic_installation = true,
 -- }
 
--- local SHORT_SETTINGS = {
---     ui = {      
---         check_outdated_packages_on_open = true,
---         border = "rounded",
+local SHORT_SETTINGS = {
+    ui = {      
+        check_outdated_packages_on_open = true,
+        border = "rounded",
 
---         icons = {
---             package_installed = "✓",
---             package_pending = "➜",
---             package_uninstalled = "✗"
---         },
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        },
 
---         keymaps = {
---             toggle_package_expand = "<Leader>p",
---             install_package = "i",
---             update_package = "u",
---             check_package_version = "c",
---             update_all_packages = "U",
---             check_outdated_packages = "C",
---             uninstall_package = "X",
---             cancel_installation = "<C-c>",
---             apply_language_filter = "<C-f>",
---         },
---     },
--- }
+        keymaps = {
+            toggle_package_expand = "<Leader><C-p>",
+            install_package = "i",
+            update_package = "u",
+            check_package_version = "c",
+            update_all_packages = "U",
+            check_outdated_packages = "C",
+            uninstall_package = "X",
+            cancel_installation = "<C-c>",
+            apply_language_filter = "<C-f>",
+        },
+    },
+}
 
--- mason.setup({ SETTINGS })
+mason.setup(SHORT_SETTINGS)
 
--- mason_config.setup({ DEFAULT_SETTINGS })
+mason_config.setup(SHORT_SETTINGS)

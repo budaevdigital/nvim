@@ -22,27 +22,28 @@ end
 -- Подробнее смотрите по команде (:help vim.diagnostic.config)
 vim.diagnostic.config({
   virtual_text = {
-    -- source = "always",  -- Or "if_many"
+    source = "always",  -- Or "if_many"
     prefix = "●", -- Может быть "■", "▎", "x"
   },
+  signs = true,
   update_in_insert = true,
   severity_sort = true,
   float = {
-    -- focusable = false,
+    focusable = false,
     style = "minimal",
     border = "rounded",
     source = "always",
     header = "",
-    -- prefix = "",
+    prefix = "",
 	},
 })
 
 
-
--- Show line diagnostics automatically in hover window
-vim.cmd([[
-  autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
-]])
+-- Показывает окно ошибки автоматически во всплывающем окне
+-- Скрыл, т.к. использую LSPSaga - более привлекательный
+-- vim.cmd([[
+--   autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
+-- ]])
 
 -- Add additional capabilities supported by nvim-cmp
 -- See: https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion

@@ -94,12 +94,63 @@ return packer.startup(function(use)
     end,
   })
 
+  -- Правильное закрытие буферов
+  use ({ "famiu/bufdelete.nvim" })
+
+  -- Подстветка пробелов и отступов
+  use ({ "lukas-reineke/indent-blankline.nvim",
+    run = function()
+        vim.opt.list = true
+        vim.opt.listchars:append("eol:↴")
+        require("indent_blankline").setup {
+            show_end_of_line = true,}
+    end,
+  })
+
   -- Оповещения
   use ("rcarriga/nvim-notify")
 
   -- Раскрашивает HEX-код в его цвет (прямо в коде)
-  use ("norcalli/nvim-colorizer.lua")
+  use ({ "norcalli/nvim-colorizer.lua",
+    config = function()
+        require("plugins.colorizer")
+    end, 
+  })
 
+
+  -- Удобное дерево файлов
+
+  use ({ "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = { 
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      { "s1n7ax/nvim-window-picker",
+        tag = "v1.*",
+        config = function()
+          require"window-picker".setup({
+            autoselect_one = true,
+            include_current = false,
+            filter_rules = {
+              -- filter using buffer options
+              bo = {
+                -- if the file type is one of following, the window will be ignored
+                filetype = { "neo-tree", "neo-tree-popup", "notify" },
+
+                -- if the buffer type is one of following, the window will be ignored
+                buftype = { "terminal", "quickfix" },
+              },
+            },
+            other_win_hl_color = '#e35e4f',
+          })
+        end,
+      }
+    },
+    config = function ()
+      require("plugins.neo_tree")
+    end,
+  })
 
   -- [[ Всё, касаёмо ЯП и написанию кода ]] --
 
@@ -110,6 +161,20 @@ return packer.startup(function(use)
   use ({ "neovim/nvim-lspconfig",
     config = function()
       require("lsp.lspconfig")
+    end,
+  })
+
+  -- Пояснение к Ошибкам и Дополнениям
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+        local saga = require("lspsaga")
+        saga.init_lsp_saga({
+          -- server_filetype_map = {
+            -- Указать сервера LSP если не используется nvim-lsp-config
+          -- }
+        })
     end,
   })
 
@@ -170,7 +235,11 @@ return packer.startup(function(use)
     end,
   })
 
-  use ("williamboman/mason-lspconfig.nvim")
+  use ({ "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("plugins.mason")
+    end,
+  })
 
   -- Автоматически настроить конфигурацию после клонирования packer.nvim
   -- Поместите это в конце после всех плагинов

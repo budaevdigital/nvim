@@ -29,7 +29,6 @@ map("n", "<Leader>w", "<cmd>w<CR>", opts)
 map("n", "<Leader>q", "<cmd>q<CR>", opts)
 map("n", "<Leader>Q", "<cmd>q!<CR>", opts) -- Обратить все изменения и выйти из NVim
 
-
 -- Выделяет все совпадающие слова (под курсором) в тексте
 map("n", "*", "*<C-o>", opts)
 
@@ -59,8 +58,10 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", opts)
 -- Новый таб
 map("n", "te", ":tabedit<Return>", opts) -- Новая пустая вкладка
 -- Переключение между табами
-map('n', '<Tab>', '<Cmd>BufferLineCycleNext<CR>', opts)
-map('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', opts)
+map("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", opts)
+map("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", opts)
+map("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", opts)
+map("n", "<Tab>C", "<Cmd>lua require('bufdelete').bufdelete(0, true)<CR>", opts)
 -- Разделение окна
 map("n", "ss", ":split<Return><C-w>w", opts)
 map("n", "sv", ":vsplit<Return><C-w>w", opts)
@@ -89,22 +90,19 @@ map("n", "k", "v:count == 0 ? 'gk' : 'k'", expr)
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", expr)
 
 
+-- Показать / Скрыть дерево файлов
+map("n", "<Leader>le", "<cmd>Neotree filesystem reveal left toggle<CR>", opts)
 
 
+-- Команды для LSP Saga - пояснения к библиотекам и функциям
+map('n', '<C-j>', '<Cmd>Lspsaga diagnostic_jump_next<CR>', opts)          -- Показать пояснение и переход к сл. ошибке
+map('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', opts)                         -- Показать подробную информацию LSP об объекте под курсором (Shift+k - фокус на этом окне)
 
+map('i', '<C-k>', '<Cmd>Lspsaga signature_help<CR>', opts)
 
-
--- Переключить NetRW (Lexplore)
-map("n", "<Leader>le", ":Lex 30<Cr>", opts)
-
-
-
-
-
-
-
-
-
+map('n', '<Leader>gd', '<Cmd>Lspsaga lsp_finder<CR>', opts)               -- MUST! Показывает информацию об объекте и места, где он используется
+map('n', '<Leader>gp', '<Cmd>Lspsaga peek_definition<CR>', opts)          -- MUST! Открывает окно (с возможностью редактирования) с местом объявления объекта
+map('n', '<Leader>gr', '<Cmd>Lspsaga rename<CR>', opts)                   -- MUST! Переименовать данный объект(все его переменные под курсором), только в месте его объявления. 
 
 
 
@@ -202,6 +200,5 @@ end
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
 
 return KeySettings
