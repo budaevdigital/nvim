@@ -33,7 +33,7 @@ ts.setup({
   sync_installed = true,
   highlight = {
     enable = true, -- Включает работу подсветки плагина
-    -- additional_vim_regex_highlighting = {},
+    additional_vim_regex_highlighting = {},
   },
   indent = {
     enable = false,
@@ -52,9 +52,8 @@ ts.setup({
   },
   },
 })
-
--- Users of packer.nvim have reported that when using treesitter for folds, they 
--- sometimes receive an error "No folds found", or that treesitter highlighting does not apply.
+-- У некоторых пользователей Пакера, возникают ошибки при использовании сворачиваний (фолд)
+-- они получают ошибку "No folds found"
 -- Код снизу решает эту проблему
 -- Подробнее о сворочивании (fold): :help foldmethod
 vim.api.nvim_create_autocmd({"BufEnter","BufAdd","BufNew","BufNewFile","BufWinEnter"}, {
@@ -64,5 +63,4 @@ vim.api.nvim_create_autocmd({"BufEnter","BufAdd","BufNew","BufNewFile","BufWinEn
     vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
   end
 })
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
+

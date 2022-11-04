@@ -55,12 +55,12 @@ cmd "nnoremap <Leader>p '+p"
 map("t", "<C-s>", "<C-\\><C-n>", opts)
 map("t", "<Esc><Esc>", "<C-\\><C-n>", opts)
 
--- Новый таб
+-- Новый таб (буфер)
 map("n", "te", ":tabedit<Return>", opts) -- Новая пустая вкладка
--- Переключение между табами
-map("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", opts)
+-- Переключение между табами (буферами)
 map("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", opts)
 map("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", opts)
+-- Закрыть таб (буфер)
 map("n", "<Tab>C", "<Cmd>lua require('bufdelete').bufdelete(0, true)<CR>", opts)
 -- Разделение окна
 map("n", "ss", ":split<Return><C-w>w", opts)
@@ -75,7 +75,7 @@ map("", "sl", "<C-w>l", opts)
 map("", "sj", "<C-w>k", opts)
 map("", "sk", "<C-w>j", opts)
 
--- Изменить размер окна с помощью (Ctrl + w) + Arrows
+-- Изменить размера окна с помощью (Ctrl + w) + Arrows
 map("n", "<C-w><up>", ":resize +2<CR>", opts)
 map("n", "<C-w><down>", ":resize -2<CR>", opts)
 map("n", "<C-w><left>", ":vertical resize -2<CR>", opts)
@@ -89,10 +89,8 @@ map("x", "K", ":move '<-2<CR>gv-gv", opts)
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", expr)
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", expr)
 
-
 -- Показать / Скрыть дерево файлов
 map("n", "<Leader>le", "<cmd>Neotree filesystem reveal left toggle<CR>", opts)
-
 
 -- Команды для LSP Saga - пояснения к библиотекам и функциям
 map('n', '<C-j>', '<Cmd>Lspsaga diagnostic_jump_next<CR>', opts)          -- Показать пояснение и переход к сл. ошибке
@@ -105,13 +103,11 @@ map('n', '<Leader>gp', '<Cmd>Lspsaga peek_definition<CR>', opts)          -- MUS
 map('n', '<Leader>gr', '<Cmd>Lspsaga rename<CR>', opts)                   -- MUST! Переименовать данный объект(все его переменные под курсором), только в месте его объявления. 
 
 
-
 -- [[ Команды для Telescope (поиск) ]] --
 local builtin = require("telescope.builtin")
-
 set("n", ";f", function()
-    builtin.find_files({ no_ignore=false, hidden=true }) end, {}) -- :lua require('telescope.builtin').find_files({layout_strategy='vertical',layout_config={width=0.5}})
-set("n", ";r", builtin.live_grep, {}) -- ":lua require('telescope.builtin').live_grep({grep_open_files=true})", {}) 
+    builtin.find_files({ no_ignore=false, hidden=true }) end, {}) -- аналогично записи :lua require('telescope.builtin').find_files({layout_strategy='vertical',layout_config={width=0.5}})
+set("n", ";r", builtin.live_grep, {}) -- аналогично записи ":lua require('telescope.builtin').live_grep({grep_open_files=true})", {}) 
 set("n", "\\\\", builtin.buffers, {})
 set("n", ";t", builtin.help_tags, {})
 set("n", ";;", builtin.resume, {})
@@ -120,6 +116,7 @@ set("n", ";e", builtin.diagnostics, {})
 local telescope = require("telescope")
 telescope.load_extension("file_browser")
 
+-- Парметры, которые отображаются в брайзере файлов (название файла \ размер \ дата создания)
 local function telescope_buffer_dir()
     return vim.fn.expand("%:p:h")
 end
@@ -175,10 +172,19 @@ KeySettings.onattach = function(client, bufnr)
     buf_set_keymap("n", "<Leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
     buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
     buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-    buf_set_keymap("n", "<Leader>eeeeQ", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-    buf_set_keymap("n", "<Leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
+    buf_set_keymap("n", "<Leader>eeeeQ", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)  
 end
+
+-- Вызов окна Mason (установка LSP, DAP, Linters, Formatters)
+KeySettings.mason_toggle_open = "<Leader><C-p>"
+-- Остальные клавиши по-молчанию, работают в окне Mason:
+-- i = Установка пакета; u = Обновление пакета; c = Проверка версии пакета;
+-- U = Обновление всех пакетов; X = Удаление пакета; Ctrl+c = Отмета установки;
+-- Ctrl+f = Настройка фильтра для поиска нужного пакета
+
+
+return KeySettings
+
 
 -- Альтернативные мапинги
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -201,4 +207,3 @@ end
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
-return KeySettings

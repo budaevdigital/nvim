@@ -1,4 +1,4 @@
--- lua/plugins.lua
+-- lua/packer_init.lua
 
 -- Место, куда packer плагин будет сохранен
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
@@ -100,9 +100,11 @@ return packer.startup(function(use)
   -- Подстветка пробелов и отступов
   use ({ "lukas-reineke/indent-blankline.nvim",
     run = function()
-        vim.opt.list = true
-        vim.opt.listchars:append("eol:↴")
+        vim.cmd([[:lua vim.opt.list = true]])
+        -- Изменяет иконку перехода на новую строку
+        vim.cmd([[:lua vim.opt.listchars:append("eol:↴")]])
         require("indent_blankline").setup {
+            -- Показывает линию отступов
             show_end_of_line = true,}
     end,
   })
@@ -119,12 +121,11 @@ return packer.startup(function(use)
 
 
   -- Удобное дерево файлов
-
   use ({ "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     requires = { 
       "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "kyazdani42/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
       { "s1n7ax/nvim-window-picker",
         tag = "v1.*",
@@ -142,7 +143,7 @@ return packer.startup(function(use)
                 buftype = { "terminal", "quickfix" },
               },
             },
-            other_win_hl_color = '#e35e4f',
+            other_win_hl_color = "#e35e4f",
           })
         end,
       }
@@ -234,10 +235,29 @@ return packer.startup(function(use)
       require("plugins.mason")
     end,
   })
-
   use ({ "williamboman/mason-lspconfig.nvim",
     config = function()
       require("plugins.mason")
+    end,
+  })
+
+  -- Форматтер кода
+  use({ "jose-elias-alvarez/null-ls.nvim",
+    config = function() 
+      require("lsp.null_ls")
+    end,
+  })
+  use({ "MunifTanjim/prettier.nvim",
+    config = function() 
+      require("lsp.prettier")
+    end,
+  })
+
+  -- Упрощает настройку Mason и Null-ls
+  -- Важен порядок(1-Mason, 2-Null-ls, 3-Mason-Null-ls)
+  use ({ "jayp0521/mason-null-ls.nvim",
+    config = function()
+      require("plugins.mason_null_ls")
     end,
   })
 

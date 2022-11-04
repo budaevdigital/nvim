@@ -1,7 +1,7 @@
 -- lua/plugins/colorizer.lua
 
 -- Подробнее о настройке тут:
-
+-- https://github.com/norcalli/nvim-colorizer.lua
 
 local colorizer_status_ok, colorizer = pcall(require, "colorizer")
 if (not colorizer_status_ok) then
@@ -9,6 +9,8 @@ if (not colorizer_status_ok) then
   return
 end
 
-colorizer.setup() = {
-    "*";
-}
+
+colorizer.setup()
+-- Можно исключить выделения в файлах указанного типа
+-- { "*";
+--  "!vim"; }

@@ -10,9 +10,6 @@ if (not lspkind_status_ok) then
 end
 
 lspkind.init({
-    -- DEPRECATED (use mode instead): enables text annotations
-    -- with_text = true,
-
     -- defines how annotations are shown
     -- "text", "text_symbol", "symbol_text", "symbol"
     mode = "symbol_text",
